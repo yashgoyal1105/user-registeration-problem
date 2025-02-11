@@ -38,11 +38,25 @@ def get_last_name():
     print("valid Last name!")
     return last_name
 
+#e_mail id
+def get_email_id():
+    e_mail = input("Enter Email id: ")
+    mail_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
+    
+    while (not re.fullmatch(mail_pattern,e_mail)):
+        logger.warning("Invalid Email entered")
+        e_mail = input(f"{e_mail} is an Invalid Email! Kindly Enter it again: ")
+        
+    logger.info(f"valid e-mail entered: {e_mail}")
+    print(f"{e_mail} is a Valid Email id!")
+    return e_mail
+
     
 def main():
     try:
         first_name = get_first_name()
         last_name = get_last_name()
+        e_mail = get_email_id()
         logger.info(f"{first_name} {last_name} registered successfully!!")
         print("registration successful!")
     
