@@ -51,12 +51,25 @@ def get_email_id():
     print(f"{e_mail} is a Valid Email id!")
     return e_mail
 
+#phone number
+def get_contact_number(): 
+    phone_number = input("Enter phone number followed by country code(seprated by whitespace): ")
+    pattern = "^\d{1,4} \d{10}$"
+    
+    while not re.fullmatch(pattern,phone_number):
+        phone_number = logger.warning("Invalid phnoe number entered.")
+        print(f"{phone_number} is an invalid number. Enter number again! : ")
+
+    logger.info("valid phone number entered.")
+    print(f"{phone_number} is a valid number! ")
+    return phone_number
     
 def main():
     try:
         first_name = get_first_name()
         last_name = get_last_name()
         e_mail = get_email_id()
+        phone_number = get_contact_number()
         logger.info(f"{first_name} {last_name} registered successfully!!")
         print("registration successful!")
     
