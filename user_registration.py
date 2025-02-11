@@ -63,13 +63,28 @@ def get_contact_number():
     logger.info("valid phone number entered.")
     print(f"{phone_number} is a valid number! ")
     return phone_number
+  
+#password  
+def set_password():
+    password = input("set minimum 8 Character password: ")
+    pattern = '^[a-zA-Z0-9]{8,}$'
+
+    while not re.fullmatch(pattern,password):
+        logger.warning("Invalid format entered")
+        password = input("Invalid password format! set password again! : ")
     
+    logger.info("valid password entered.")
+    print("valid passwrod! ")
+    return password
+
+
 def main():
     try:
         first_name = get_first_name()
         last_name = get_last_name()
         e_mail = get_email_id()
         phone_number = get_contact_number()
+        password = set_password()
         logger.info(f"{first_name} {last_name} registered successfully!!")
         print("registration successful!")
     
