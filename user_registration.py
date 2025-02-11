@@ -25,10 +25,25 @@ def get_first_name():
     print("valid First name!") 
     return first_name
 
+#last name
+def get_last_name():
+    last_name = input("Enter Last name (Last name starts with Cap and has minimum 3 characters): ")
+    name_pattern = "^[A-Z][a-z]{2,}$"
+    
+    while (not re.fullmatch(name_pattern,last_name)):
+        logger.warning("Invalid last name entered.")
+        last_name = input("Invalid last name. Enter Fisrt name again: ")
+    
+    logger.info(f"valid last name: {last_name}")
+    print("valid Last name!")
+    return last_name
+
+    
 def main():
     try:
         first_name = get_first_name()
-        logger.info(f"{first_name} registered successfully!!")
+        last_name = get_last_name()
+        logger.info(f"{first_name} {last_name} registered successfully!!")
         print("registration successful!")
     
     except Exception as e:
