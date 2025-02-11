@@ -66,8 +66,8 @@ def get_contact_number():
   
 #password  
 def set_password():
-    password = input("set minimum 8 Character password: ")
-    pattern = '^[a-zA-Z0-9]{8,}$'
+    password = input("set minimum 8 Character password with at least one upper case: ")
+    pattern = '^(?=.*[A-Z])[a-zA-Z0-9]{8,}$'
 
     while not re.fullmatch(pattern,password):
         logger.warning("Invalid format entered")
