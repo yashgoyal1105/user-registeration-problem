@@ -1,0 +1,38 @@
+import re 
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler("user_registration.log"),  # Logs to file
+        logging.StreamHandler()  # Logs to console
+    ]
+)
+logger = logging.getLogger(__name__)
+
+#fisrt name
+def get_first_name():
+    first_name = input("Enter first name (First name starts with Cap and has minimum 3 characters): ")
+    name_pattern = "^[A-Z][a-z]{2,}$"
+
+    while (not re.fullmatch(name_pattern,first_name)):
+        logger.warning("Invalid First name was entered by the user.")
+        first_name = input("Invalid first name. Enter Fisrt name again: ")
+    
+    logger.info(f"valid first name: {first_name}")
+    print("valid First name!") 
+    return first_name
+
+def main():
+    try:
+        first_name = get_first_name()
+        logger.info(f"{first_name} registered successfully!!")
+        print("registration successful!")
+    
+    except Exception as e:
+        logger.error(f"Unexpected error {e}")
+    
+if __name__ == '__main__':
+    main() 
