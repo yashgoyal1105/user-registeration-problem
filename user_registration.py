@@ -1,4 +1,4 @@
-import re 
+import re
 import logging
 
 # Configure logging
@@ -6,90 +6,98 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
-        logging.FileHandler("user_registration.log"),  # Logs to file
-        logging.StreamHandler()  # Logs to console
+        logging.FileHandler("user_registration.log"),
+        logging.StreamHandler()
     ]
 )
 logger = logging.getLogger(__name__)
 
-#fisrt name
-def get_first_name():
-    first_name = input("Enter first name (First name starts with Cap and has minimum 3 characters): ")
+# Function to validate first name
+def validate_first_name(first_name):
     name_pattern = "^[A-Z][a-z]{2,}$"
+    if re.fullmatch(name_pattern, first_name):
+        logger.info(f"Valid first name: {first_name}")
+        return True
+    logger.warning("Invalid first name entered.")
+    return False
 
-    while (not re.fullmatch(name_pattern,first_name)):
-        logger.warning("Invalid First name was entered by the user.")
-        first_name = input("Invalid first name. Enter Fisrt name again: ")
-    
-    logger.info(f"valid first name: {first_name}")
-    print("valid First name!") 
-    return first_name
-
-#last name
-def get_last_name():
-    last_name = input("Enter Last name (Last name starts with Cap and has minimum 3 characters): ")
+# Function to validate last name
+def validate_last_name(last_name):
     name_pattern = "^[A-Z][a-z]{2,}$"
-    
-    while (not re.fullmatch(name_pattern,last_name)):
-        logger.warning("Invalid last name entered.")
-        last_name = input("Invalid last name. Enter Fisrt name again: ")
-    
-    logger.info(f"valid last name: {last_name}")
-    print("valid Last name!")
-    return last_name
+    if re.fullmatch(name_pattern, last_name):
+        logger.info(f"Valid last name: {last_name}")
+        return True
+    logger.warning("Invalid last name entered.")
+    return False
 
-#e_mail id
-def get_email_id():
-    e_mail = input("Enter Email id: ")
+# Function to validate email
+def validate_email(e_mail):
     mail_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
-    
-    while (not re.fullmatch(mail_pattern,e_mail)):
-        logger.warning("Invalid Email entered")
-        e_mail = input(f"{e_mail} is an Invalid Email! Kindly Enter it again: ")
-        
-    logger.info(f"valid e-mail entered: {e_mail}")
-    print(f"{e_mail} is a Valid Email id!")
-    return e_mail
+    if re.fullmatch(mail_pattern, e_mail):
+        logger.info(f"Valid email entered: {e_mail}")
+        return True
+    logger.warning("Invalid email entered.")
+    return False
 
-#phone number
-def get_contact_number(): 
-    phone_number = input("Enter phone number followed by country code(seprated by whitespace): ")
-    pattern = "^\d{1,4} \d{10}$"
-    
-    while not re.fullmatch(pattern,phone_number):
-        phone_number = logger.warning("Invalid phnoe number entered.")
-        print(f"{phone_number} is an invalid number. Enter number again! : ")
+# Function to validate phone number
+def validate_contact_number(phone_number):
+    pattern = r"^\d{1,3} \d{10}$"
+    if re.fullmatch(pattern, phone_number):
+        logger.info("Valid phone number entered.")
+        return True
+    logger.warning("Invalid phone number entered.")
+    return False
 
-    logger.info("valid phone number entered.")
-    print(f"{phone_number} is a valid number! ")
-    return phone_number
-  
-#password  
-def set_password():
-    password = input("Set a password (min 8 chars, 1 uppercase, 1 number, exactly 1 special character): ")
-    pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$'  
+# Function to validate password
+def validate_password(password):
+    pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$'
+    if re.fullmatch(pattern, password):
+        logger.info("Valid password entered.")
+        return True
+    logger.warning("Invalid password format entered.")
+    return False
 
-    while not re.fullmatch(pattern,password):
-        logger.warning("Invalid format entered")
-        password = input("Invalid password format! set password again! : ")
-    
-    logger.info("valid password entered.")
-    print("valid passwrod! ")
-    return password
+# Function to get validated user input
+def get_validated_input(prompt, validation_func):
+    user_input = input(prompt)
+    while not validation_func(user_input):
+        print("Invalid input. Please try again.")
+        user_input = input(prompt)
+    return user_input
 
-
+# Main function to handle user registration
 def main():
     try:
-        first_name = get_first_name()
-        last_name = get_last_name()
-        e_mail = get_email_id()
-        phone_number = get_contact_number()
-        password = set_password()
-        logger.info(f"{first_name} {last_name} registered successfully!!")
-        print("registration successful!")
-    
+        first_name = get_validated_input(
+            "Enter First name (Starts with a capital letter, min 3 chars): ", 
+            validate_first_name
+        )
+        
+        last_name = get_validated_input(
+            "Enter Last name (Starts with a capital letter, min 3 chars): ", 
+            validate_last_name
+        )
+        
+        email = get_validated_input(
+            "Enter Email ID: ", 
+            validate_email
+        )
+        
+        phone_number = get_validated_input(
+            "Enter phone number (Country code followed by number, e.g., 91 9876543210): ", 
+            validate_contact_number
+        )
+        
+        password = get_validated_input(
+            "Set a password (Min 8 chars, 1 uppercase, 1 number, 1 special char): ", 
+            validate_password
+        )
+
+        logger.info(f"User {first_name} {last_name} registered successfully!")
+        print("\nRegistration Successful!")
+
     except Exception as e:
-        logger.error(f"Unexpected error {e}")
-    
-if __name__ == '__main__':
-    main() 
+        logger.error(f"Unexpected error: {e}")
+
+if __name__ == "__main__":
+    main()
