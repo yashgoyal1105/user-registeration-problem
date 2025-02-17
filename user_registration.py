@@ -12,8 +12,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Function to validate first name
 def validate_first_name(first_name):
+    """Validates the first name to ensure it starts with a capital letter and has at least 3 characters."""
     name_pattern = "^[A-Z][a-z]{2,}$"
     if re.fullmatch(name_pattern, first_name):
         logger.info(f"Valid first name: {first_name}")
@@ -21,8 +21,8 @@ def validate_first_name(first_name):
     logger.warning("Invalid first name entered.")
     return False
 
-# Function to validate last name
 def validate_last_name(last_name):
+    """Validates the last name to ensure it starts with a capital letter and has at least 3 characters."""
     name_pattern = "^[A-Z][a-z]{2,}$"
     if re.fullmatch(name_pattern, last_name):
         logger.info(f"Valid last name: {last_name}")
@@ -30,8 +30,8 @@ def validate_last_name(last_name):
     logger.warning("Invalid last name entered.")
     return False
 
-# Function to validate email
 def validate_email(e_mail):
+    """Validates an email address based on a general email format pattern."""
     mail_pattern = r'^[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)?@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}(\.[a-zA-Z]{2})?$'
     if re.fullmatch(mail_pattern, e_mail):
         logger.info(f"Valid email entered: {e_mail}")
@@ -39,8 +39,8 @@ def validate_email(e_mail):
     logger.warning("Invalid email entered.")
     return False
 
-# Function to validate phone number
 def validate_contact_number(phone_number):
+    """Validates a phone number ensuring it follows the format: country code followed by a 10-digit number."""
     pattern = r"^\d{1,3} \d{10}$"
     if re.fullmatch(pattern, phone_number):
         logger.info("Valid phone number entered.")
@@ -48,8 +48,8 @@ def validate_contact_number(phone_number):
     logger.warning("Invalid phone number entered.")
     return False
 
-# Function to validate password
 def validate_password(password):
+    """Validates the password ensuring it has at least 8 characters, an uppercase letter, a number, and a special character."""
     pattern = r'^(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$'
     if re.fullmatch(pattern, password):
         logger.info("Valid password entered.")
@@ -57,16 +57,16 @@ def validate_password(password):
     logger.warning("Invalid password format entered.")
     return False
 
-# Function to get validated user input
 def get_validated_input(prompt, validation_func):
+    """Prompts the user for input and validates it using the provided validation function."""
     user_input = input(prompt)
     while not validation_func(user_input):
         print("Invalid input. Please try again.")
         user_input = input(prompt)
     return user_input
 
-# Main function to handle user registration
 def main():
+    """Main function to handle user registration with input validation."""
     try:
         first_name = get_validated_input(
             "Enter First name (Starts with a capital letter, min 3 chars): ", 
