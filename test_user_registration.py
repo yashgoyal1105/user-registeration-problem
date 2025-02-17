@@ -57,4 +57,12 @@ def test_validate_contact_number(phone_number, expected):
 ])
 
 def test_validate_password(password, expected):
+<<<<<<< HEAD
     assert validate_password(password) == expected
+=======
+<<<<<<< HEAD
+    assert validate_password(password) == expected
+=======
+    assert validate_password(password) == expected
+>>>>>>> UC8_1spl_char
+>>>>>>> dev
